@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="springboot_shiro" />
         <module name="springboot_test" />
+        <module name="springboot_mybatis" />
         <module name="springboot_exception" />
       </profile>
     </annotationProcessing>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SpringBootSecurity" options="-parameters" />
       <module name="springboot_exception" options="-parameters" />
+      <module name="springboot_mybatis" options="-parameters" />
       <module name="springboot_shiro" options="-parameters" />
       <module name="springboot_test" options="-parameters" />
     </option>
