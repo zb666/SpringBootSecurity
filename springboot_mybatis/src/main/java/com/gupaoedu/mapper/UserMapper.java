@@ -16,6 +16,4 @@ public interface UserMapper {
 
     Integer deleteUserById(Integer id);
 
-
-
 }
