@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/GpSpringBootSecurity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringDataJPA/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot_ehcache/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_exception/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_mybatis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot_quartz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot_scheduled/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_shiro/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_test/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />

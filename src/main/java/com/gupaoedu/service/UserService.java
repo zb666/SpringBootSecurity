@@ -1,6 +1,6 @@
-package com.gupaoedu.service;
-
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-public interface UserService extends UserDetailsService {
-}
+//package com.gupaoedu.service;
+//
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//
+//public interface UserService extends UserDetailsService {
+//}
