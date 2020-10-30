@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthcController {
+
     @RequestMapping("/login.do")
     public String login(HttpServletRequest request){
         // 认证失败的异常信息
@@ -21,4 +22,5 @@ public class AuthcController {
         SecurityUtils.getSubject().logout();
         return "redirect:/login";
     }
+
 }

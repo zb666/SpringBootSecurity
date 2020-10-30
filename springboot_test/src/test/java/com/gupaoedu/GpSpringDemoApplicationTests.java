@@ -17,7 +17,10 @@ public class GpSpringDemoApplicationTests {
 
     @Test
     public void contextLoads(){
+        System.out.println(userService.hashCode());
         userService.insertUser();
     }
+
+
 
 }

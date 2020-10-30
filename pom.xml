@@ -18,6 +18,8 @@
         <module>springboot_scheduled</module>
         <module>springboot_quartz</module>
         <module>SpringDataJPA</module>
+        <module>springboot_rabbitmq</module>
+        <module>springboot_redis</module>
     </modules>
 
     <parent>

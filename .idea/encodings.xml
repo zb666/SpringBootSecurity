@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/springboot_exception/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_mybatis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_quartz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot_rabbitmq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot_redis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_scheduled/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_shiro/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/springboot_test/src/main/java" charset="UTF-8" />

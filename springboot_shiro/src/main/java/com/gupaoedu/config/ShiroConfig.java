@@ -1,63 +1,89 @@
 package com.gupaoedu.config;
 
-import com.gupaoedu.pojo.User;
-import com.gupaoedu.service.IUserService;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.SimpleByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gupaoedu.realm.AuthcRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * 让每一个人的职业生涯不留遗憾
- */
-public class ShiroConfig extends AuthorizingRealm {
+@Configuration
+public class ShiroConfig {
 
-    @Autowired
-    private IUserService service;
+    private String hashAlgorithName = "md5";
 
-    /**
-     * 认证的方法
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
-     */
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        String userName = token.getUsername();
-        System.out.println("开始认证：" + userName);
-        User user = new User();
-        user.setUsername(userName);
-        // 根据账号认证
-        List<User> list = service.query(user);
-        if(list == null || list.size() != 1){
-            // 账号不存在或者异常
-            return  null;
-        }
-        user = list.get(0);
-        return new SimpleAuthenticationInfo(user
-                ,user.getPassword() // 密码
-                ,new SimpleByteSource(user.getSalt()) // salt
-                ,"authcRealm" // 自定义的Realm名称
-        );
+    private Integer hashIterations = 1024;
+
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName(hashAlgorithName);
+        matcher.setHashIterations(hashIterations);
+        return matcher;
     }
 
     /**
-     * 授权的方法
-     * @param principalCollection
+     *  获取SecurityManager对象
+     * @param realm
      * @return
      */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        User user = (User) principalCollection.getPrimaryPrincipal();
-        System.out.println("授权的账号是：" + user.getUsername());
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRole("role1");
-        return info;
+    @Bean
+    //@DependsOn("authcRealm")
+    public SecurityManager securityManager(AuthcRealm realm){
+        DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
+        manager.setRealm(realm);
+        return manager;
     }
+
+    /**
+     * 注册ShiroFilterFactoryBean
+     * @param manager
+     * @return
+     */
+    @Bean
+    //@DependsOn("securityManager")
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager manager){
+        ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
+        filter.setSecurityManager(manager);
+        filter.setLoginUrl("/login.do");
+        filter.setSuccessUrl("/success.html");
+        filter.setUnauthorizedUrl("/refuse.html");
+        // 设置过滤器链
+        Map<String,String> map = new HashMap<>();
+        map.put("/css/*","anon");
+        map.put("/js/**","anon");
+        map.put("/img/**","anon");
+        map.put("/js/**","anon");
+        map.put("/login","anon");
+        map.put("/login.do","authc");
+        map.put("/**","authc");
+        filter.setFilterChainDefinitionMap(map);
+        return filter;
+    }
+
+    /**
+     * 开始Shiro 注解授权操作开始
+     * @param manager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager manager){
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(manager);
+        return advisor;
+    }
+
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+        proxyCreator.setProxyTargetClass(true);
+        return proxyCreator;
+    }
+
 }
