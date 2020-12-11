@@ -1,4 +1,4 @@
-package com.gupao.redis;
+package com.gupao.redis.redis;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
